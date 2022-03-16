@@ -1,20 +1,22 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        Path file =  Paths.get("src/main/resources/airports.dat");
         //TODO Сделать выборку по столбцам и отсортировать и всё, отдыхать...
-        try{
-            File file = new File("src/main/resources/airports.dat");
-
-            FileReader reader = new FileReader(file);
-            BufferedReader readerStr = new BufferedReader(reader);
-
+        try(InputStream in = Files.newInputStream(file);
+            BufferedReader readerStr = new BufferedReader(new InputStreamReader(in));
+        ){
+            //FileReader reader = new FileReader(String.valueOf(file));
             String line = readerStr.readLine();
             int i=1;
             long time = System.currentTimeMillis();
             while(line!=null) {
-                if(Parser.getFirstEntry(line, "Boi")>0)
+                if(Parser.getFirstEntry(line, "Bo")>0)
                 {
                     System.out.println("строка " + i);
                 }
@@ -23,8 +25,9 @@ public class Main {
                 line = readerStr.readLine();
                 i++;
             }
-            System.out.println(i);
             System.out.println(System.currentTimeMillis() - time);
+            System.out.println(i);
+            readerStr.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
