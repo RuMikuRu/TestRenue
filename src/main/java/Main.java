@@ -3,6 +3,7 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        //TODO Сделать выборку по столбцам и отсортировать и всё, отдыхать...
         try{
             File file = new File("src/main/resources/airports.dat");
 
