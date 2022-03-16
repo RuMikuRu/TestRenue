@@ -27,7 +27,6 @@ public class Main {
             }
             System.out.println(System.currentTimeMillis() - time);
             System.out.println(i);
-            readerStr.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
