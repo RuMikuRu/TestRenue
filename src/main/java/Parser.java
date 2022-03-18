@@ -1,19 +1,14 @@
 import java.util.HashMap;
 
 public class Parser {
-    public static int getFirstEntry(String source, String template) {
+    public static int getFirstEntry(String source, String template, HashMap<Character, Integer> offsetTable) {
         int sourceLen = source.length();
         int templateLen = template.length();
         if (templateLen > sourceLen) {
             return -1;
         }
-        HashMap<Character, Integer> offsetTable = new HashMap<Character, Integer>();
-        for (int i = 0; i <= 8219; i++) {
-            offsetTable.put((char) i,  templateLen);
-        }
-        for (int i = 0; i < templateLen - 1; i++) {
-            offsetTable.put(template.charAt(i),  (templateLen - i - 1));
-        }
+        //HashMap<Character, Integer> offsetTable = new HashMap<Character, Integer>();
+
         int i = templateLen - 1;
         int j = i;
         int k = i;
