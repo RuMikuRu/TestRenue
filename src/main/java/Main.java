@@ -1,52 +1,80 @@
-import java.io.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.*;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 
 public class Main {
     private static final HashMap<Character, Integer> offsetTable = new HashMap<Character, Integer>();
-    String line;
     public static void main(String[] args) throws IOException {
+
         //TODO Сделать выборку по столбцам и отсортировать и всё, отдыхать...
         try{
             Path file = Paths.get("src/main/resources/airports.dat");
+            SortingFileByColumn sortingFileByColumn = new SortingFileByColumn(1,file);
+            ArrayList<Map.Entry<Integer, String>> sortArray = new ArrayList<Map.Entry<Integer, String>>(sortingFileByColumn.Sort());
+            Search searching = new Search("Boi", sortArray);
+            searching.searching();
 
-            String template = "Ni";
+
+
+            String template = "Boi";
             int templateLen = template.length();
-
-            for (int i = 0; i <= 8219; i++) {
-                offsetTable.put((char) i,  templateLen);
-            }
-            for (int i = 0; i < templateLen - 1; i++) {
-                offsetTable.put(template.charAt(i),  (templateLen - i - 1));
-            }
-            int column=4;
+            int column=2;
             long time = System.currentTimeMillis();
-
+            List<String> str = new ArrayList<String>();
             Files.lines(file).forEach(line->{
-                //int i=1;
-                //while(line!=null) {
-                    //if(Parser.getFirstEntry(line, template, offsetTable)>0)
-                    //{
-                        //System.out.println(line);
-                        //System.out.println(line.indexOf(","));
-                    //}
-                   // i++;
-                //}
-                //System.out.println(i);
                 char separator = ',';
                 int[] index = IntStream.range(0, line.length()).filter(i->line.charAt(i) == separator).toArray();
                 if(line.substring(index[column-2],index[column-1]).contains(template))
-                    System.out.println(line);
+                {
+                    str.add(line);
+                }
             });
-            System.out.println(System.currentTimeMillis() - time);
+            String[][] array = new String[str.size()][];
+            for(int i=0;i<str.size();i++)
+            {
+                array[i] = str.get(i).split(",");
+
+            }
+
+            String[] temp = new String[array.length];
+            boolean changed = true;
+            while(changed)
+            {
+                changed=false;
+                for(int i=0;i< array.length-1;i++)
+                {
+                    if(compareString(array[i][column-1],array[i+1][column-1]))
+                    {
+                        temp=array[i];
+                        array[i] = array[i+1];
+                        array[i+1]=temp;
+                        changed=true;
+                    }
+                }
+            }
+            //for(int i=0;i< array.length;i++)
+                //System.out.println(Arrays.toString(array[i]));
+            //System.out.println(System.currentTimeMillis() - time);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        //System.out.print(Parser.getFirstEntry("HeSheIt", "She"));
     }
+    public static Boolean compareString(String s1, String s2)
+    {
+        int comparedResult = s1.compareTo(s2);
+
+        if(comparedResult>=0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 }
