@@ -23,24 +23,19 @@ public class Search {
             public void run() {
                 for (int i=0;i< arrayList.size();i++)
                 {
-                    try{
-                        String s1 = arrayList.get(i).getValue();
-                        Thread.sleep(1);
-                        if(s1.contains(searchString))
-                        {
-                            //result[i] = Integer.parseInt(arrayList.get(i).getValue());
-                            System.out.println(arrayList.get(i).getKey());
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    String s1 = arrayList.get(i).getValue();
+                    //Thread.sleep(1);
+                    if(s1.startsWith(searchString))
+                    {
+                        //result[i] = Integer.parseInt(arrayList.get(i).getValue());
+                        System.out.println(arrayList.get(i).getKey());
                     }
                 }
             }
         });
-
         thread.start();
         threads.add(thread);
-
+        long time = System.currentTimeMillis();
         threads.forEach(thread1 -> {
             try{
                 thread.join();
@@ -48,6 +43,7 @@ public class Search {
                 e.printStackTrace();
             }
         });
+        System.out.println(System.currentTimeMillis() - time);
         //System.out.println(Arrays.toString(Arrays.stream(result).toArray()));
     }
 }
