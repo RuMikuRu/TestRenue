@@ -28,6 +28,7 @@ public class Search {
                 }
                 else
                 {
+
                     i = arrayList.size();
                 }
                 for (i=0;i< arrayList.size();i++)
