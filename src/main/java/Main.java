@@ -1,9 +1,7 @@
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class Main {
     private static final HashMap<Character, Integer> offsetTable = new HashMap<Character, Integer>();
@@ -16,7 +14,6 @@ public class Main {
             searching.searching();
         } catch (IOException ex) {
             ex.printStackTrace();
-
         }
     }
 
