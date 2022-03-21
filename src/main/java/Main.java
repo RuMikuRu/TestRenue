@@ -12,25 +12,13 @@ public class Main {
             Path file = Paths.get("src/main/resources/airports.dat");
             SortingFileByColumn sortingFileByColumn = new SortingFileByColumn(1,file);
             ArrayList<Map.Entry<Integer, String>> sortArray = new ArrayList<Map.Entry<Integer, String>>(sortingFileByColumn.Sort());
-            Search searching = new Search("Boi", sortArray);
+            Search searching = new Search("Wol", sortArray);
             searching.searching();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    public static Boolean compareString(String s1, String s2)
-    {
-        int comparedResult = s1.compareTo(s2);
 
-        if(comparedResult>=0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
 
 }

@@ -21,7 +21,16 @@ public class Search {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i=0;i< arrayList.size();i++)
+                int i;
+                if (compareString(arrayList.get(arrayList.size()/2).getValue(), searchString))
+                {
+                    i = arrayList.size()/2;
+                }
+                else
+                {
+                    i = arrayList.size();
+                }
+                for (i=0;i< arrayList.size();i++)
                 {
                     String s1 = arrayList.get(i).getValue();
                     //Thread.sleep(1);
@@ -45,5 +54,19 @@ public class Search {
         });
         System.out.println(System.currentTimeMillis() - time);
         //System.out.println(Arrays.toString(Arrays.stream(result).toArray()));
+    }
+
+    public static Boolean compareString(String s1, String s2)
+    {
+        int comparedResult = s1.compareTo(s2);
+
+        if(comparedResult>=0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
