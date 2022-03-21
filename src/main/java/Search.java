@@ -60,7 +60,7 @@ public class Search {
     {
         int comparedResult = s1.compareTo(s2);
 
-        if(comparedResult>=0)
+        if(comparedResult<=0)
         {
             return true;
         }

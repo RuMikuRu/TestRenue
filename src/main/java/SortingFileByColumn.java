@@ -17,7 +17,7 @@ public class SortingFileByColumn {
         ReadFileByColumn reading = new ReadFileByColumn(column, fileName);
         Map<Integer, String> array = reading.reading();
         array.entrySet().stream()
-                .sorted(Map.Entry.<Integer,String>comparingByValue());
+                .sorted(Map.Entry.<Integer,String>comparingByValue()).forEach(System.out::println);
         Set<Map.Entry<Integer,String>> setArray = array.entrySet();
         return setArray;
     }

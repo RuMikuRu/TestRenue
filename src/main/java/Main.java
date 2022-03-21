@@ -12,7 +12,7 @@ public class Main {
             Path file = Paths.get("src/main/resources/airports.dat");
             SortingFileByColumn sortingFileByColumn = new SortingFileByColumn(1,file);
             ArrayList<Map.Entry<Integer, String>> sortArray = new ArrayList<Map.Entry<Integer, String>>(sortingFileByColumn.Sort());
-            Search searching = new Search("Wol", sortArray);
+            Search searching = new Search("Lom", sortArray);
             searching.searching();
         } catch (IOException ex) {
             ex.printStackTrace();
