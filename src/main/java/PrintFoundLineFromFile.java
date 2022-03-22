@@ -31,7 +31,6 @@ public class PrintFoundLineFromFile {
                 String s1 = br.readLine();
                 if(numberLine.length>indexForNumberLine) {
                     if (s1.startsWith(String.valueOf(numberLine[indexForNumberLine]))) {
-                        //System.out.println(s1);
                         arrayPrint.add(s1);
                         indexForNumberLine++;
                     }
@@ -61,7 +60,10 @@ public class PrintFoundLineFromFile {
             }
 
             for(int i=0;i< pleaseWork.length;i++)
-                System.out.println(Arrays.toString(pleaseWork[i]));
+                System.out.println(Arrays.toString(pleaseWork[i]).replaceAll("^\\[|\\]$", ""));
+
+            System.out.println("Колличество найденных строк " + pleaseWork.length);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

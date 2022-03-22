@@ -14,12 +14,12 @@ public class Main {
                  //   .collect(Collectors.joining("\n"));
             //Files.write(Paths.get("Sorted"),content.getBytes());
 
-            SortingFileByColumn sortingFileByColumn = new SortingFileByColumn(1-1,file);
+            SortingFileByColumn sortingFileByColumn = new SortingFileByColumn(1,file);
             ArrayList<Map.Entry<Integer, String>> sortArray = new ArrayList<Map.Entry<Integer, String>>(sortingFileByColumn.Sort());
-            Search searching = new Search("Boi", sortArray, file, 1-1);
+            Search searching = new Search("Lom", sortArray, file, 1);
             long time = System.currentTimeMillis();
             searching.searching();
-            System.out.println(System.currentTimeMillis()-time);
+            System.out.println("Время затраченное на поиск " + (System.currentTimeMillis()-time)+" мс");
         } catch (IOException | ExecutionException | InterruptedException ex) {
             ex.printStackTrace();
 
