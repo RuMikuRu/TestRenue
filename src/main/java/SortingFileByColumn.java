@@ -1,9 +1,11 @@
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class SortingFileByColumn {
+public class SortingFileByColumn  {
     private int column;
     private Path fileName;
 
@@ -16,9 +18,13 @@ public class SortingFileByColumn {
     public Set<Map.Entry<Integer, String>> Sort() throws IOException {
         ReadFileByColumn reading = new ReadFileByColumn(column, fileName);
         Map<Integer, String> array = reading.reading();
-        array.entrySet().stream()
-                .sorted(Map.Entry.<Integer,String>comparingByValue()).forEach(System.out::println);
-        Set<Map.Entry<Integer,String>> setArray = array.entrySet();
-        return setArray;
+        Map<Integer, String> sortedArray = array.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1,e2) -> e1,
+                        LinkedHashMap::new));
+        sortedArray.entrySet();
+        return sortedArray.entrySet();
     }
 }

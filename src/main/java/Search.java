@@ -1,70 +1,55 @@
+import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.*;
 
 
 public class Search {
     private String searchString;
     private ArrayList<Map.Entry<Integer,String>> arrayList;
-
-    Search(String searchString, ArrayList<Map.Entry<Integer, String>> arrayList)
+    private Path fileName;
+    private int column;
+    Search(String searchString, ArrayList<Map.Entry<Integer, String>> arrayList, Path fileName, int column)
     {
         this.searchString = searchString;
         this.arrayList = arrayList;
+        this.fileName = fileName;
+        this.column=column;
     }
 
-    public void searching()
-    {
-        System.out.println("Начинаю поиск");
-        List<Thread> threads = new LinkedList<>();
-        //final int[] result = new int[arrayList.size()];
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int i;
-                if (compareString(arrayList.get(arrayList.size()/2).getValue(), searchString))
-                {
-                    i = arrayList.size()/2;
-                }
-                else
-                {
-                    i = arrayList.size();
-                }
-                for (i=0;i< arrayList.size();i++)
-                {
-                    String s1 = arrayList.get(i).getValue();
-                    //Thread.sleep(1);
-                    if(s1.startsWith(searchString))
-                    {
-                        //result[i] = Integer.parseInt(arrayList.get(i).getValue());
-                        System.out.println(arrayList.get(i).getKey());
-                    }
-                }
-            }
-        });
-        thread.start();
-        threads.add(thread);
-        long time = System.currentTimeMillis();
-        threads.forEach(thread1 -> {
-            try{
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        System.out.println(System.currentTimeMillis() - time);
-        //System.out.println(Arrays.toString(Arrays.stream(result).toArray()));
-    }
-
-    public static Boolean compareString(String s1, String s2)
-    {
-        int comparedResult = s1.compareTo(s2);
-
-        if(comparedResult<=0)
+    public void searching() throws ExecutionException, InterruptedException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        ThreadAccess threadA = new ThreadAccess(searchString, arrayList,0, (int) Math.sqrt(arrayList.size()));
+        ThreadAccess threadB = new ThreadAccess(searchString, arrayList,(int) Math.sqrt(arrayList.size()), arrayList.size());
+        Future<Integer> futureA = executor.submit(threadA);
+        Future<Integer> futureB = executor.submit(threadB);
+        int tempTwo = futureA.get();
+        int tempOne = futureB.get();
+        int index=0;
+        if(tempOne>=0)
         {
-            return true;
-        }
-        else
+            index=tempOne;
+        }else if (tempTwo>=0)
         {
-            return false;
+            index=tempTwo;
         }
+        else{
+            System.out.println("Не найдено");
+        }
+        int i=index;
+        int j=0;
+        while (arrayList.get(i).getValue().startsWith(searchString))
+        {
+            i++;
+        }
+        int[] foundIndex = new int[i-index];
+        i=index;
+        while(arrayList.get(i).getValue().startsWith(searchString))
+        {
+            foundIndex[j] = arrayList.get(i).getKey();
+            j++;
+            i++;
+        }
+        Arrays.sort(foundIndex);
+        new PrintFoundLineFromFile(foundIndex, arrayList.size(), fileName, column).print();
     }
 }
