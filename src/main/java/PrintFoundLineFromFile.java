@@ -49,7 +49,7 @@ public class PrintFoundLineFromFile {
                 changed=false;
                 for(int i=0;i< pleaseWork.length-1;i++)
                 {
-                    if(compareString(pleaseWork[i][column],pleaseWork[i+1][column]))
+                    if(compareString(pleaseWork[i][column-1],pleaseWork[i+1][column-1]))
                     {
                         temp=pleaseWork[i];
                         pleaseWork[i]=pleaseWork[i+1];
@@ -73,7 +73,7 @@ public class PrintFoundLineFromFile {
     {
         int comparedResult = s1.compareTo(s2);
 
-        if(comparedResult>=0)
+        if(comparedResult>0)
         {
             return true;
         }

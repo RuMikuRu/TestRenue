@@ -20,19 +20,19 @@ public class ReadFileByColumn {
         AtomicInteger lineNumber= new AtomicInteger(1);
         Files.lines(this.fileName).forEach(line->{
             char separator = ',';
-            int index[] = IntStream.range(1, line.length() - 1).filter(i -> line.charAt(i) == separator && line.charAt(i + 1) != ' ')
+            int index[] = IntStream.range(0, line.length() - 1).filter(i -> line.charAt(i) == separator && line.charAt(i + 1) != ' ')
                         .toArray();
-            if(column==0)
+            if(column==1)
             {
                 str.put(Integer.parseInt(line.substring(0,index[0])
                                 .replace(",","").replace("\"",""))
                         ,line.substring(index[0],index[1])
                                 .replace(",","").replace("\"",""));
-            }else if(column > 0)
+            }else if(column > 1)
             {
                 str.put(Integer.parseInt(line.substring(0,index[0])
                                 .replace(",","").replace("\"",""))
-                        ,line.substring(index[this.column-1],index[this.column])
+                        ,line.substring(index[this.column-2],index[this.column-1])
                                 .replace(",","").replace("\"",""));
             }
             lineNumber.getAndIncrement();
